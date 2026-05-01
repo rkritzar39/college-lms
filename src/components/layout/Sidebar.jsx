@@ -3,14 +3,14 @@ import { Link } from "react-router-dom";
 export default function Sidebar() {
   return (
     <aside className="sidebar">
-      <div className="logo">LMS</div>
+      <h2>LMS</h2>
 
-      <nav className="nav">
+      <nav>
         <Link to="/">Dashboard</Link>
-        <Link to="/grades">Grades</Link>
+        <Link to="/grades">Gradebook</Link>
       </nav>
 
-      <div className="nav-secondary">
+      <div className="courses">
         <p>Courses</p>
         <Link to="/course/cybersecurity">Cybersecurity</Link>
         <Link to="/course/networking">Networking</Link>
