@@ -2,13 +2,13 @@
   {
     "id": "cybersecurity",
     "name": "Intro to Cybersecurity",
-    "progress": 42,
-    "term": "Fall 2026"
+    "term": "Fall 2026",
+    "progress": 40
   },
   {
     "id": "networking",
     "name": "Networking Basics",
-    "progress": 25,
-    "term": "Fall 2026"
+    "term": "Fall 2026",
+    "progress": 25
   }
 ]
