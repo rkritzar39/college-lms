@@ -6,33 +6,55 @@ import modules from "../../data/modules.json";
 export default function CoursePage() {
   const { id } = useParams();
 
-  const course = courses.find(c => c.id === id);
-  const courseAssignments = assignments.filter(a => a.courseId === id);
-  const courseModules = modules.filter(m => m.courseId === id);
+  const course = courses?.find((c) => c.id === id);
+  const courseAssignments =
+    assignments?.filter((a) => a.courseId === id) || [];
+  const courseModules =
+    modules?.filter((m) => m.courseId === id) || [];
 
-  if (!course) return <div>Course not found</div>;
+  if (!course) {
+    return (
+      <div style={{ padding: 20 }}>
+        <h2>Course not found</h2>
+      </div>
+    );
+  }
 
   return (
-    <div>
+    <div className="course-page">
       <h1>{course.name}</h1>
       <p>{course.term}</p>
 
-      <h2>Modules</h2>
-      {courseModules.map((m, i) => (
-        <div key={i} className="module">
-          <h3>{m.title}</h3>
-          <p>{m.description}</p>
-        </div>
-      ))}
+      <div className="section">
+        <h2>Modules</h2>
 
-      <h2>Assignments</h2>
-      {courseAssignments.map((a, i) => (
-        <div key={i} className={`row ${a.status}`}>
-          <span>{a.title}</span>
-          <span>{a.status}</span>
-          <span>{a.grade ?? "-"}</span>
-        </div>
-      ))}
+        {courseModules.length === 0 ? (
+          <p>No modules yet</p>
+        ) : (
+          courseModules.map((m, i) => (
+            <div key={i} className="module">
+              <h3>{m.title}</h3>
+              <p>{m.description}</p>
+            </div>
+          ))
+        )}
+      </div>
+
+      <div className="section">
+        <h2>Assignments</h2>
+
+        {courseAssignments.length === 0 ? (
+          <p>No assignments yet</p>
+        ) : (
+          courseAssignments.map((a, i) => (
+            <div key={i} className={`row ${a.status}`}>
+              <span>{a.title}</span>
+              <span>{a.status}</span>
+              <span>{a.grade ?? "-"}</span>
+            </div>
+          ))
+        )}
+      </div>
     </div>
   );
 }
