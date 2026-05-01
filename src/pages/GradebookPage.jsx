@@ -3,7 +3,7 @@ import courses from "../../data/courses.json";
 
 export default function GradebookPage() {
   return (
-    <div>
+    <div className="gradebook-page">
       <h1>Gradebook</h1>
 
       <div className="table">
@@ -14,12 +14,12 @@ export default function GradebookPage() {
           <span>Grade</span>
         </div>
 
-        {assignments.map((a, i) => {
-          const course = courses.find(c => c.id === a.courseId);
+        {assignments?.map((a, i) => {
+          const course = courses?.find((c) => c.id === a.courseId);
 
           return (
             <div key={i} className={`row ${a.status}`}>
-              <span>{course?.name}</span>
+              <span>{course?.name || "Unknown Course"}</span>
               <span>{a.title}</span>
               <span>{a.status}</span>
               <span>{a.grade ?? "-"}</span>
