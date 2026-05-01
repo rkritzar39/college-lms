@@ -1,1 +1,46 @@
+<div class="app">
 
+  <aside class="sidebar">
+    <h2>Course</h2>
+    <a href="index.html">Dashboard</a>
+  </aside>
+
+  <main class="main">
+
+    <div class="topbar">
+      <h1 id="courseTitle">Course</h1>
+    </div>
+
+    <div class="content">
+      <div id="assignments"></div>
+    </div>
+
+  </main>
+
+</div>
+
+<script src="app.js"></script>
+
+<script>
+const id = new URLSearchParams(location.search).get("id");
+const course = db.courses.find(c => c.id === id);
+
+document.getElementById("courseTitle").innerText = course.name;
+
+const el = document.getElementById("assignments");
+
+db.assignments
+  .filter(a => a.courseId === id)
+  .forEach(a => {
+
+    const div = document.createElement("div");
+    div.className = "card";
+
+    div.innerHTML = `
+      <strong>${a.title}</strong>
+      <p>Grade: ${a.grade ?? "Not graded"}</p>
+    `;
+
+    el.appendChild(div);
+  });
+</script>
