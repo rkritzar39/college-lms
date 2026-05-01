@@ -1,28 +1,25 @@
-import assignments from "../data/assignments.json";
-import courses from "../data/courses.json";
+import assignments from "../../data/assignments.json";
+import courses from "../../data/courses.json";
 
 export default function GradebookPage() {
   return (
-    <div className="gradebook-page">
+    <div>
       <h1>Gradebook</h1>
 
-      <div className="gradebook-table">
-
-        {/* HEADER */}
-        <div className="gradebook-row header">
+      <div className="table">
+        <div className="row header">
           <span>Course</span>
           <span>Assignment</span>
           <span>Status</span>
           <span>Grade</span>
         </div>
 
-        {/* ROWS */}
         {assignments.map((a, i) => {
           const course = courses.find(c => c.id === a.courseId);
 
           return (
-            <div key={i} className={`gradebook-row ${a.status}`}>
-              <span>{course?.name || a.courseId}</span>
+            <div key={i} className={`row ${a.status}`}>
+              <span>{course?.name}</span>
               <span>{a.title}</span>
               <span>{a.status}</span>
               <span>{a.grade ?? "-"}</span>
