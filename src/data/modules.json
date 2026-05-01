@@ -1,1 +1,12 @@
-
+[
+  {
+    "courseId": "cybersecurity",
+    "title": "Week 1 - Intro",
+    "description": "Security fundamentals"
+  },
+  {
+    "courseId": "cybersecurity",
+    "title": "Week 2 - Networking",
+    "description": "How data moves"
+  }
+]
