@@ -1,11 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Instructor</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
 <div class="app">
 
-  <aside class="sidebar">
+  <div class="sidebar">
     <h2>Instructor</h2>
     <a href="index.html">Dashboard</a>
-  </aside>
+  </div>
 
-  <main class="main">
+  <div class="main">
 
     <div class="topbar">
       <h1>Instructor Panel</h1>
@@ -15,23 +25,23 @@
 
       <div class="card">
         <h3>Add Course</h3>
-
         <input id="name" placeholder="Course name">
-        <button onclick="addCourse()">Add</button>
+        <button onclick="add()">Add</button>
       </div>
 
       <div id="admin"></div>
 
     </div>
 
-  </main>
+  </div>
 
 </div>
 
 <script src="app.js"></script>
 
 <script>
-function render() {
+function render(){
+
   const el = document.getElementById("admin");
   el.innerHTML = "";
 
@@ -42,14 +52,14 @@ function render() {
 
     div.innerHTML = `
       <strong>${c.name}</strong>
-      <button onclick="remove('${c.id}')">Delete</button>
+      <button onclick="del('${c.id}')">Delete</button>
     `;
 
     el.appendChild(div);
   });
 }
 
-function addCourse() {
+function add(){
   const name = document.getElementById("name").value;
 
   db.courses.push({
@@ -62,7 +72,7 @@ function addCourse() {
   render();
 }
 
-function remove(id) {
+function del(id){
   db.courses = db.courses.filter(c => c.id !== id);
   save(db);
   render();
@@ -70,3 +80,6 @@ function remove(id) {
 
 render();
 </script>
+
+</body>
+</html>
