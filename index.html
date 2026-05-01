@@ -1,26 +1,16 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>College LMS</title>
-  <link rel="stylesheet" href="styles.css" />
-</head>
-
-<body>
-
 <div class="app">
 
   <aside class="sidebar">
     <h2>College LMS</h2>
     <a href="index.html">Dashboard</a>
+    <a href="gradebook.html">Gradebook</a>
     <a href="instructor.html">Instructor</a>
   </aside>
 
   <main class="main">
 
     <div class="topbar">
-      <h1>Academic Dashboard</h1>
+      <h1>Dashboard</h1>
     </div>
 
     <div class="content">
@@ -28,9 +18,32 @@
     </div>
 
   </main>
-
 </div>
 
 <script src="app.js"></script>
-</body>
-</html>
+<script>
+const el = document.getElementById("dashboard");
+
+db.courses.forEach(c => {
+
+  const assignments = db.assignments.filter(a => a.courseId === c.id);
+  const avg = assignments.reduce((s,a)=>s+(a.grade||0),0)/(assignments.length||1);
+
+  const div = document.createElement("div");
+  div.className = "card";
+
+  div.innerHTML = `
+    <h3>${c.name}</h3>
+
+    <div class="bar">
+      <div style="width:${avg}%"></div>
+    </div>
+
+    <p>${Math.round(avg)}% progress</p>
+
+    <a href="course.html?id=${c.id}">Open Course</a>
+  `;
+
+  el.appendChild(div);
+});
+</script>
