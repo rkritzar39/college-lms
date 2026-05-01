@@ -13,14 +13,7 @@ body {
   width: 220px;
   background: #1e2a38;
   color: white;
-  padding: 16px;
-}
-
-.sidebar a {
-  color: #cfd6dd;
-  display: block;
-  margin: 8px 0;
-  text-decoration: none;
+  padding: 12px;
 }
 
 .main-shell {
@@ -29,18 +22,8 @@ body {
   flex-direction: column;
 }
 
-.topbar {
-  height: 50px;
-  background: white;
-  border-bottom: 1px solid #ddd;
-  display: flex;
-  justify-content: space-between;
-  padding: 0 16px;
-  align-items: center;
-}
-
 .page {
-  padding: 20px;
+  padding: 16px;
 }
 
 .grid {
@@ -52,33 +35,16 @@ body {
 .card {
   background: white;
   padding: 12px;
-  border-radius: 8px;
   text-decoration: none;
   color: black;
 }
 
 .bar {
   height: 6px;
-  background: #eee;
-  margin-top: 8px;
+  background: #ddd;
 }
 
 .bar div {
   height: 100%;
   background: #2d7ff9;
-}
-
-.row {
-  display: grid;
-  grid-template-columns: 2fr 2fr 1fr 1fr;
-  padding: 10px;
-  border-bottom: 1px solid #eee;
-}
-
-.row.completed {
-  color: green;
-}
-
-.row.in-progress {
-  color: #2d7ff9;
 }
