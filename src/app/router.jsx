@@ -8,13 +8,13 @@ import GradebookPage from "../components/gradebook/GradebookPage";
 export default function Router() {
   return (
     <BrowserRouter>
-      <Layout>
-        <Routes>
+      <Routes>
+        <Route element={<Layout />}>
           <Route path="/" element={<Dashboard />} />
           <Route path="/course/:id" element={<CoursePage />} />
           <Route path="/grades" element={<GradebookPage />} />
-        </Routes>
-      </Layout>
+        </Route>
+      </Routes>
     </BrowserRouter>
   );
 }
