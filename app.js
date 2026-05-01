@@ -1,57 +1,54 @@
-const KEY = "canvas-lms-db";
+const KEY = "college-lms-db";
 
-/* ================= DATABASE ================= */
+/* ================= SEED DATABASE ================= */
 
 const seed = {
-  semesters: [
-    { id: "fall-2026", name: "Fall 2026" }
-  ],
-
   courses: [
-    { id: "cyber", name: "Cybersecurity 101", semester: "fall-2026" },
-    { id: "net", name: "Networking Basics", semester: "fall-2026" }
+    { id: "cyber", name: "Cybersecurity 101", progress: 40 },
+    { id: "net", name: "Networking Basics", progress: 25 }
   ],
 
   assignments: [
     { id: "a1", courseId: "cyber", title: "Threat Models", grade: 90 },
-    { id: "a2", courseId: "cyber", title: "Risk Quiz", grade: null }
+    { id: "a2", courseId: "cyber", title: "Risk Quiz", grade: null },
+    { id: "a3", courseId: "net", title: "IP Address Lab", grade: 85 }
   ]
 };
 
-/* ================= STORAGE ================= */
+/* ================= LOAD / SAVE ================= */
 
-function load(){
-  const d = localStorage.getItem(KEY);
-  if(!d){
+function load() {
+  const data = localStorage.getItem(KEY);
+  if (!data) {
     localStorage.setItem(KEY, JSON.stringify(seed));
     return seed;
   }
-  return JSON.parse(d);
+  return JSON.parse(data);
 }
 
-function save(db){
+function save(db) {
   localStorage.setItem(KEY, JSON.stringify(db));
 }
 
 let db = load();
 
-/* ================= GPA ================= */
+/* ================= GPA CALCULATOR ================= */
 
-function gpa(){
-  let total=0,count=0;
+function gpa() {
+  let total = 0, count = 0;
 
-  db.assignments.forEach(a=>{
-    if(a.grade != null){
+  db.assignments.forEach(a => {
+    if (a.grade != null) {
       total += a.grade;
       count++;
     }
   });
 
-  const avg = total/(count||1);
+  const avg = total / (count || 1);
 
-  if(avg>=90) return 4.0;
-  if(avg>=80) return 3.0;
-  if(avg>=70) return 2.0;
-  if(avg>=60) return 1.0;
+  if (avg >= 90) return 4.0;
+  if (avg >= 80) return 3.0;
+  if (avg >= 70) return 2.0;
+  if (avg >= 60) return 1.0;
   return 0;
 }
