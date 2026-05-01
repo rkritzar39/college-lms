@@ -2,6 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard</title>
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -10,6 +11,7 @@
 
 <div class="app">
 
+  <!-- SIDEBAR -->
   <div class="sidebar">
     <h2>College LMS</h2>
     <a href="index.html">Dashboard</a>
@@ -17,13 +19,14 @@
     <a href="instructor.html">Instructor</a>
   </div>
 
+  <!-- MAIN -->
   <div class="main">
 
     <div class="topbar">
-      <h1>Semesters</h1>
+      <h1>Academic Dashboard</h1>
     </div>
 
-    <div class="content" id="root"></div>
+    <div class="content" id="dashboard"></div>
 
   </div>
 
@@ -32,41 +35,57 @@
 <script src="app.js"></script>
 
 <script>
-const root=document.getElementById("root");
+const root = document.getElementById("dashboard");
 
-db.semesters.forEach(s=>{
+/* ================= SEMESTER GROUPING ================= */
 
-  const box=document.createElement("div");
-  box.className="card";
+db.semesters.forEach(sem => {
 
-  box.innerHTML=`<h2>${s.name}</h2>`;
+  const semesterBox = document.createElement("div");
+  semesterBox.className = "card";
 
-  db.courses
-    .filter(c=>c.semester===s.id)
-    .forEach(c=>{
+  semesterBox.innerHTML = `<h2>${sem.name}</h2>`;
 
-      const avg=db.assignments
-        .filter(a=>a.courseId===c.id)
-        .reduce((s,a)=>s+(a.grade||0),0);
+/* FILTER COURSES */
+  const courses = db.courses.filter(c => c.semester === sem.id);
 
-      const div=document.createElement("div");
-      div.className="card";
+  courses.forEach(c => {
 
-      div.innerHTML=`
-        <h3>${c.name}</h3>
+    const assignments = db.assignments.filter(a => a.courseId === c.id);
 
-        <div class="bar">
-          <div style="width:${avg}%"></div>
-        </div>
+    const avg = assignments.length
+      ? assignments.reduce((s,a)=>s+(a.grade||0),0)/assignments.length
+      : 0;
 
-        <a href="course.html?id=${c.id}">Open</a>
-      `;
+    const courseCard = document.createElement("div");
+    courseCard.className = "card";
 
-      box.appendChild(div);
-    });
+    courseCard.innerHTML = `
 
-  root.appendChild(box);
+      <h3>${c.name}</h3>
+
+      <div class="bar">
+        <div style="width:${avg}%"></div>
+      </div>
+
+      <p style="margin:6px 0;color:#6b7785;">
+        ${Math.round(avg)}% progress
+      </p>
+
+      <a href="course.html?id=${c.id}">
+        Open Course
+      </a>
+
+    `;
+
+    semesterBox.appendChild(courseCard);
+
+  });
+
+  root.appendChild(semesterBox);
+
 });
 </script>
+
 </body>
 </html>
