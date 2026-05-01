@@ -10,7 +10,7 @@ export default function Sidebar() {
         <Link to="/grades">Gradebook</Link>
       </nav>
 
-      <div className="courses">
+      <div>
         <p>Courses</p>
         <Link to="/course/cybersecurity">Cybersecurity</Link>
         <Link to="/course/networking">Networking</Link>
