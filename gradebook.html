@@ -37,16 +37,16 @@
 <script src="app.js"></script>
 
 <script>
-const el = document.getElementById("grades");
+const el=document.getElementById("grades");
 
-db.assignments.forEach(a => {
+db.assignments.forEach(a=>{
 
-  const course = db.courses.find(c => c.id === a.courseId);
+  const course=getCourse(a.courseId);
 
-  const div = document.createElement("div");
-  div.className = "card";
+  const div=document.createElement("div");
+  div.className="card";
 
-  div.innerHTML = `
+  div.innerHTML=`
     <strong>${course.name}</strong>
     <p>${a.title}</p>
     <p>Grade: ${a.grade ?? "-"}</p>
@@ -55,7 +55,7 @@ db.assignments.forEach(a => {
   el.appendChild(div);
 });
 
-document.getElementById("gpa").innerText = gpa().toFixed(2);
+document.getElementById("gpa").innerText=gpa().toFixed(2);
 </script>
 
 </body>
