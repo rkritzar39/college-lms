@@ -1,29 +1,23 @@
 const KEY = "college-lms-db";
 
-/* ================= DATA ================= */
-
 const seed = {
   courses: [
-    { id: "cyber", name: "Cybersecurity 101", semester: "fall", progress: 40 },
-    { id: "net", name: "Networking Basics", semester: "fall", progress: 25 }
+    { id: "cyber", name: "Cybersecurity 101" },
+    { id: "net", name: "Networking Basics" }
   ],
-
   assignments: [
     { id: "a1", courseId: "cyber", title: "Threat Models", grade: 90 },
-    { id: "a2", courseId: "cyber", title: "Risk Quiz", grade: null },
-    { id: "a3", courseId: "net", title: "IP Lab", grade: 85 }
+    { id: "a2", courseId: "cyber", title: "Quiz", grade: null }
   ]
 };
 
-/* ================= STORAGE ================= */
-
 function load(){
-  const data = localStorage.getItem(KEY);
-  if(!data){
+  const d = localStorage.getItem(KEY);
+  if(!d){
     localStorage.setItem(KEY, JSON.stringify(seed));
     return seed;
   }
-  return JSON.parse(data);
+  return JSON.parse(d);
 }
 
 function save(db){
@@ -31,8 +25,6 @@ function save(db){
 }
 
 let db = load();
-
-/* ================= GPA ================= */
 
 function gpa(){
   let total=0,count=0;
