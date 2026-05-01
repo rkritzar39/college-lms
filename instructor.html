@@ -1,26 +1,14 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Instructor</title>
-  <link rel="stylesheet" href="styles.css" />
-</head>
-
-<body>
-
 <div class="app">
 
   <aside class="sidebar">
     <h2>Instructor</h2>
     <a href="index.html">Dashboard</a>
-    <a href="instructor.html">Instructor</a>
   </aside>
 
   <main class="main">
 
     <div class="topbar">
-      <h1>Registrar Panel</h1>
+      <h1>Instructor Panel</h1>
     </div>
 
     <div class="content">
@@ -28,14 +16,11 @@
       <div class="card">
         <h3>Add Course</h3>
 
-        <input id="courseName" placeholder="Course name" />
-        <select id="semesterSelect"></select>
-
-        <button onclick="addCourse()">Add Course</button>
+        <input id="name" placeholder="Course name">
+        <button onclick="addCourse()">Add</button>
       </div>
 
-      <h2>Manage Courses</h2>
-      <div id="adminCourses"></div>
+      <div id="admin"></div>
 
     </div>
 
@@ -44,5 +29,44 @@
 </div>
 
 <script src="app.js"></script>
-</body>
-</html>
+
+<script>
+function render() {
+  const el = document.getElementById("admin");
+  el.innerHTML = "";
+
+  db.courses.forEach(c => {
+
+    const div = document.createElement("div");
+    div.className = "card";
+
+    div.innerHTML = `
+      <strong>${c.name}</strong>
+      <button onclick="remove('${c.id}')">Delete</button>
+    `;
+
+    el.appendChild(div);
+  });
+}
+
+function addCourse() {
+  const name = document.getElementById("name").value;
+
+  db.courses.push({
+    id: name.toLowerCase().replace(/\s/g,"-"),
+    name,
+    progress: 0
+  });
+
+  save(db);
+  render();
+}
+
+function remove(id) {
+  db.courses = db.courses.filter(c => c.id !== id);
+  save(db);
+  render();
+}
+
+render();
+</script>
