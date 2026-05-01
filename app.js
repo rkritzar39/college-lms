@@ -1,6 +1,6 @@
-const KEY = "lms-db";
+const KEY = "canvas-lms-db";
 
-/* ================= INITIAL DATA ================= */
+/* ================= DATABASE ================= */
 
 const seed = {
   semesters: [
@@ -8,162 +8,50 @@ const seed = {
   ],
 
   courses: [
-    {
-      id: "cybersecurity",
-      name: "Intro to Cybersecurity",
-      semester: "fall-2026",
-      progress: 40
-    },
-    {
-      id: "networking",
-      name: "Networking Basics",
-      semester: "fall-2026",
-      progress: 25
-    }
+    { id: "cyber", name: "Cybersecurity 101", semester: "fall-2026" },
+    { id: "net", name: "Networking Basics", semester: "fall-2026" }
   ],
 
   assignments: [
-    {
-      id: "a1",
-      courseId: "cybersecurity",
-      title: "Threat Models Lab",
-      grade: 95,
-      status: "completed"
-    },
-    {
-      id: "a2",
-      courseId: "cybersecurity",
-      title: "Risk Quiz",
-      grade: null,
-      status: "in progress"
-    }
+    { id: "a1", courseId: "cyber", title: "Threat Models", grade: 90 },
+    { id: "a2", courseId: "cyber", title: "Risk Quiz", grade: null }
   ]
 };
 
-/* ================= DB ================= */
+/* ================= STORAGE ================= */
 
-function load() {
-  const data = localStorage.getItem(KEY);
-  if (!data) {
+function load(){
+  const d = localStorage.getItem(KEY);
+  if(!d){
     localStorage.setItem(KEY, JSON.stringify(seed));
     return seed;
   }
-  return JSON.parse(data);
+  return JSON.parse(d);
 }
 
-function save(data) {
-  localStorage.setItem(KEY, JSON.stringify(data));
+function save(db){
+  localStorage.setItem(KEY, JSON.stringify(db));
 }
 
 let db = load();
 
-/* ================= DASHBOARD ================= */
+/* ================= GPA ================= */
 
-function renderDashboard() {
-  const el = document.getElementById("dashboard");
-  if (!el) return;
+function gpa(){
+  let total=0,count=0;
 
-  el.innerHTML = "";
-
-  db.semesters.forEach(sem => {
-
-    const block = document.createElement("div");
-    block.className = "card";
-
-    block.innerHTML = `<h2>${sem.name}</h2>`;
-
-    db.courses
-      .filter(c => c.semester === sem.id)
-      .forEach(course => {
-
-        const assignments = db.assignments.filter(a => a.courseId === course.id);
-        const graded = assignments.filter(a => a.grade !== null);
-
-        const avg =
-          graded.reduce((s, a) => s + a.grade, 0) / (graded.length || 1);
-
-        course.progress = Math.round(avg || 0);
-
-        block.innerHTML += `
-          <div class="card">
-            <h3>${course.name}</h3>
-
-            <div class="bar">
-              <div style="width:${course.progress}%"></div>
-            </div>
-
-            <p>${course.progress}% complete</p>
-          </div>
-        `;
-      });
-
-    el.appendChild(block);
+  db.assignments.forEach(a=>{
+    if(a.grade != null){
+      total += a.grade;
+      count++;
+    }
   });
 
-  save(db);
+  const avg = total/(count||1);
+
+  if(avg>=90) return 4.0;
+  if(avg>=80) return 3.0;
+  if(avg>=70) return 2.0;
+  if(avg>=60) return 1.0;
+  return 0;
 }
-
-/* ================= INSTRUCTOR ================= */
-
-function renderAdmin() {
-  const el = document.getElementById("adminCourses");
-  const select = document.getElementById("semesterSelect");
-
-  if (!el) return;
-
-  el.innerHTML = "";
-  select.innerHTML = "";
-
-  db.semesters.forEach(s => {
-    const opt = document.createElement("option");
-    opt.value = s.id;
-    opt.textContent = s.name;
-    select.appendChild(opt);
-  });
-
-  db.courses.forEach(c => {
-    const div = document.createElement("div");
-    div.className = "card";
-
-    div.innerHTML = `
-      <strong>${c.name}</strong>
-      <p>${c.semester}</p>
-
-      <button onclick="deleteCourse('${c.id}')">Delete</button>
-    `;
-
-    el.appendChild(div);
-  });
-}
-
-/* ================= COURSE ACTIONS ================= */
-
-function addCourse() {
-  const name = document.getElementById("courseName").value;
-  const sem = document.getElementById("semesterSelect").value;
-
-  db.courses.push({
-    id: name.toLowerCase().replace(/\s/g, "-"),
-    name,
-    semester: sem,
-    progress: 0
-  });
-
-  save(db);
-  renderAdmin();
-  renderDashboard();
-}
-
-function deleteCourse(id) {
-  db.courses = db.courses.filter(c => c.id !== id);
-  db.assignments = db.assignments.filter(a => a.courseId !== id);
-
-  save(db);
-  renderAdmin();
-  renderDashboard();
-}
-
-/* ================= INIT ================= */
-
-renderDashboard();
-renderAdmin();
