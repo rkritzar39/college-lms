@@ -1,1 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Instructor Panel</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
 
+<body>
+
+<div class="app">
+
+  <aside class="sidebar">
+    <h2>Instructor</h2>
+    <a href="index.html">Public View</a>
+    <a href="instructor.html">Instructor Panel</a>
+  </aside>
+
+  <main class="main">
+
+    <header class="topbar">
+      <h1>Registrar Dashboard</h1>
+    </header>
+
+    <section class="content">
+
+      <div class="card">
+        <h3>Add Course</h3>
+
+        <input id="name" placeholder="Course Name" />
+        <input id="term" placeholder="Term (Fall 2026)" />
+
+        <button onclick="addCourse()">Add Course</button>
+      </div>
+
+      <h2>Manage Courses</h2>
+      <div id="adminList"></div>
+
+    </section>
+
+  </main>
+
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
