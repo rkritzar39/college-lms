@@ -1,6 +1,6 @@
 :root{
   --bg:#f5f7fb;
-  --panel:#ffffff;
+  --panel:#fff;
   --border:#dfe3e8;
   --text:#2d3b45;
   --muted:#6b7785;
@@ -8,14 +8,16 @@
   --sidebar:#1e2a38;
 }
 
+*{box-sizing:border-box}
+
 body{
   margin:0;
-  font-family: system-ui, Arial;
+  font-family:system-ui,Arial;
   background:var(--bg);
   color:var(--text);
 }
 
-/* APP LAYOUT */
+/* APP */
 .app{
   display:flex;
   min-height:100vh;
@@ -25,20 +27,20 @@ body{
 .sidebar{
   width:260px;
   background:var(--sidebar);
-  color:white;
-  padding:18px;
+  color:#fff;
+  padding:16px;
   position:fixed;
   height:100vh;
+  overflow:auto;
 }
 
 .sidebar h2{
   font-size:16px;
-  margin-bottom:20px;
 }
 
 .sidebar a{
   display:block;
-  color:white;
+  color:#fff;
   text-decoration:none;
   padding:10px;
   border-radius:6px;
@@ -61,19 +63,15 @@ body{
 .topbar{
   background:var(--panel);
   border-bottom:1px solid var(--border);
-  padding:16px 24px;
+  padding:16px;
   position:sticky;
   top:0;
-}
-
-.topbar h1{
-  margin:0;
-  font-size:18px;
+  z-index:10;
 }
 
 /* CONTENT */
 .content{
-  padding:24px;
+  padding:20px;
   max-width:1100px;
 }
 
@@ -82,9 +80,10 @@ body{
   background:var(--panel);
   border:1px solid var(--border);
   border-left:4px solid var(--blue);
-  border-radius:8px;
+  border-radius:10px;
   padding:14px;
-  margin-bottom:14px;
+  margin-bottom:12px;
+  box-shadow:0 2px 6px rgba(0,0,0,0.04);
 }
 
 /* PROGRESS */
@@ -93,7 +92,6 @@ body{
   background:#e6e9ef;
   border-radius:999px;
   overflow:hidden;
-  margin-top:8px;
 }
 
 .bar div{
@@ -101,28 +99,34 @@ body{
   background:var(--blue);
 }
 
-/* BUTTONS */
-button{
-  background:var(--blue);
-  color:white;
-  border:none;
-  padding:8px 12px;
-  border-radius:6px;
-  cursor:pointer;
-  margin-top:8px;
-}
-
 /* INPUTS */
-input, select{
-  padding:10px;
+input{
   width:100%;
+  padding:10px;
   margin:6px 0;
   border:1px solid var(--border);
   border-radius:6px;
 }
 
-/* MOBILE */
+/* BUTTON */
+button{
+  background:var(--blue);
+  color:#fff;
+  border:none;
+  padding:8px 12px;
+  border-radius:6px;
+  cursor:pointer;
+}
+
+/* LIST */
+ul{
+  margin:6px 0;
+}
+
+/* ================= MOBILE ================= */
+
 @media (max-width:768px){
+
   .sidebar{
     position:relative;
     width:100%;
