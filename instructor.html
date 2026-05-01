@@ -10,26 +10,55 @@
 
 <div class="app">
 
+  <!-- SIDEBAR -->
   <div class="sidebar">
     <h2>Instructor</h2>
     <a href="index.html">Dashboard</a>
+    <a href="gradebook.html">Gradebook</a>
+    <a href="instructor.html">Instructor</a>
   </div>
 
+  <!-- MAIN -->
   <div class="main">
 
     <div class="topbar">
-      <h1>Instructor Panel</h1>
+      <h1>Instructor Control Panel</h1>
     </div>
 
     <div class="content">
 
+      <!-- ADD COURSE -->
       <div class="card">
         <h3>Add Course</h3>
-        <input id="name" placeholder="Course name">
-        <button onclick="add()">Add</button>
+
+        <input id="courseName" placeholder="Course name">
+        <input id="courseSemester" placeholder="Semester (e.g. fall-2026)">
+
+        <button onclick="addCourse()">Add Course</button>
       </div>
 
-      <div id="admin"></div>
+      <!-- ADD MODULE -->
+      <div class="card">
+        <h3>Add Module</h3>
+
+        <input id="moduleCourse" placeholder="Course ID">
+        <input id="moduleTitle" placeholder="Module title">
+
+        <button onclick="addModule()">Add Module</button>
+      </div>
+
+      <!-- ADD ASSIGNMENT -->
+      <div class="card">
+        <h3>Add Assignment</h3>
+
+        <input id="assignCourse" placeholder="Course ID">
+        <input id="assignTitle" placeholder="Assignment title">
+
+        <button onclick="addAssignment()">Add Assignment</button>
+      </div>
+
+      <!-- DATA VIEW -->
+      <div id="adminView"></div>
 
     </div>
 
@@ -40,45 +69,142 @@
 <script src="app.js"></script>
 
 <script>
+
+/* ================= RENDER ADMIN VIEW ================= */
+
 function render(){
+  const el=document.getElementById("adminView");
+  el.innerHTML="";
 
-  const el = document.getElementById("admin");
-  el.innerHTML = "";
+/* COURSES */
+  const cBox=document.createElement("div");
+  cBox.className="card";
+  cBox.innerHTML="<h3>Courses</h3>";
 
-  db.courses.forEach(c => {
+  db.courses.forEach(c=>{
+    const div=document.createElement("div");
+    div.className="card";
 
-    const div = document.createElement("div");
-    div.className = "card";
-
-    div.innerHTML = `
-      <strong>${c.name}</strong>
-      <button onclick="del('${c.id}')">Delete</button>
+    div.innerHTML=`
+      <strong>${c.name}</strong><br>
+      <small>${c.semester}</small><br>
+      <button onclick="deleteCourse('${c.id}')">Delete</button>
     `;
 
-    el.appendChild(div);
+    cBox.appendChild(div);
   });
+
+  el.appendChild(cBox);
+
+/* MODULES */
+  const mBox=document.createElement("div");
+  mBox.className="card";
+  mBox.innerHTML="<h3>Modules</h3>";
+
+  db.modules.forEach(m=>{
+    const div=document.createElement("div");
+    div.className="card";
+
+    div.innerHTML=`
+      <strong>${m.title}</strong><br>
+      <small>${m.courseId}</small><br>
+      <button onclick="deleteModule('${m.id}')">Delete</button>
+    `;
+
+    mBox.appendChild(div);
+  });
+
+  el.appendChild(mBox);
+
+/* ASSIGNMENTS */
+  const aBox=document.createElement("div");
+  aBox.className="card";
+  aBox.innerHTML="<h3>Assignments</h3>";
+
+  db.assignments.forEach(a=>{
+    const div=document.createElement("div");
+    div.className="card";
+
+    div.innerHTML=`
+      <strong>${a.title}</strong><br>
+      <small>${a.courseId}</small><br>
+      <button onclick="deleteAssignment('${a.id}')">Delete</button>
+    `;
+
+    aBox.appendChild(div);
+  });
+
+  el.appendChild(aBox);
 }
 
-function add(){
-  const name = document.getElementById("name").value;
+/* ================= ADD FUNCTIONS ================= */
+
+function addCourse(){
+  const name=document.getElementById("courseName").value;
+  const sem=document.getElementById("courseSemester").value;
 
   db.courses.push({
-    id: name.toLowerCase().replace(/\s/g,"-"),
+    id:name.toLowerCase().replace(/\s/g,"-"),
     name,
-    progress: 0
+    semester:sem
   });
 
   save(db);
   render();
 }
 
-function del(id){
-  db.courses = db.courses.filter(c => c.id !== id);
+function addModule(){
+  const course=document.getElementById("moduleCourse").value;
+  const title=document.getElementById("moduleTitle").value;
+
+  db.modules.push({
+    id:"m"+Math.random().toString(36).substr(2,5),
+    courseId:course,
+    title,
+    items:[]
+  });
+
+  save(db);
+  render();
+}
+
+function addAssignment(){
+  const course=document.getElementById("assignCourse").value;
+  const title=document.getElementById("assignTitle").value;
+
+  db.assignments.push({
+    id:"a"+Math.random().toString(36).substr(2,5),
+    courseId:course,
+    title,
+    grade:null
+  });
+
+  save(db);
+  render();
+}
+
+/* ================= DELETE ================= */
+
+function deleteCourse(id){
+  db.courses=db.courses.filter(c=>c.id!==id);
+  save(db);
+  render();
+}
+
+function deleteModule(id){
+  db.modules=db.modules.filter(m=>m.id!==id);
+  save(db);
+  render();
+}
+
+function deleteAssignment(id){
+  db.assignments=db.assignments.filter(a=>a.id!==id);
   save(db);
   render();
 }
 
 render();
+
 </script>
 
 </body>
