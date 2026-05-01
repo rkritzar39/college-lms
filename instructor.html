@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Instructor Panel</title>
+  <title>Instructor</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 
@@ -13,31 +13,31 @@
 
   <aside class="sidebar">
     <h2>Instructor</h2>
-    <a href="index.html">Public View</a>
-    <a href="instructor.html">Instructor Panel</a>
+    <a href="index.html">Dashboard</a>
+    <a href="instructor.html">Instructor</a>
   </aside>
 
   <main class="main">
 
-    <header class="topbar">
-      <h1>Registrar Dashboard</h1>
-    </header>
+    <div class="topbar">
+      <h1>Registrar Panel</h1>
+    </div>
 
-    <section class="content">
+    <div class="content">
 
       <div class="card">
         <h3>Add Course</h3>
 
-        <input id="name" placeholder="Course Name" />
-        <input id="term" placeholder="Term (Fall 2026)" />
+        <input id="courseName" placeholder="Course name" />
+        <select id="semesterSelect"></select>
 
         <button onclick="addCourse()">Add Course</button>
       </div>
 
       <h2>Manage Courses</h2>
-      <div id="adminList"></div>
+      <div id="adminCourses"></div>
 
-    </section>
+    </div>
 
   </main>
 
