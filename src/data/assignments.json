@@ -1,1 +1,14 @@
-
+[
+  {
+    "courseId": "cybersecurity",
+    "title": "Linux Lab 1",
+    "status": "completed",
+    "grade": 95
+  },
+  {
+    "courseId": "cybersecurity",
+    "title": "Quiz 1",
+    "status": "in-progress",
+    "grade": null
+  }
+]
