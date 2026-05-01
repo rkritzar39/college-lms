@@ -37,42 +37,76 @@
 <script src="app.js"></script>
 
 <script>
-const id=new URLSearchParams(location.search).get("id");
+const id = new URLSearchParams(location.search).get("id");
 
-const course=getCourse(id);
-document.getElementById("title").innerText=course.name;
+const course = getCourse(id);
+document.getElementById("title").innerText = course.name;
 
-/* MODULES */
-const mEl=document.getElementById("modules");
+/* ================= MODULE STATE ================= */
+
+const stateKey = "module-state-" + id;
+let moduleState = JSON.parse(localStorage.getItem(stateKey)) || {};
+
+/* ================= MODULES ================= */
+
+const mEl = document.getElementById("modules");
 
 db.modules
-  .filter(m=>m.courseId===id)
-  .forEach(m=>{
+  .filter(m => m.courseId === id)
+  .forEach(m => {
 
-    const div=document.createElement("div");
-    div.className="card";
+    const isOpen = moduleState[m.id] ?? true;
 
-    div.innerHTML=`
-      <h3>${m.title}</h3>
-      <ul>
-        ${m.items.map(i=>`<li>${i}</li>`).join("")}
-      </ul>
+    const div = document.createElement("div");
+    div.className = "card module";
+
+    div.innerHTML = `
+      <div class="module-header" data-id="${m.id}">
+        <span class="arrow">${isOpen ? "▼" : "▶"}</span>
+        <strong>${m.title}</strong>
+      </div>
+
+      <div class="module-body" style="display:${isOpen ? "block" : "none"}">
+        <ul>
+          ${m.items.map(i => `<li>${i}</li>`).join("")}
+        </ul>
+      </div>
     `;
 
     mEl.appendChild(div);
   });
 
-/* ASSIGNMENTS */
-const aEl=document.getElementById("assignments");
+/* ================= TOGGLE ================= */
+
+document.querySelectorAll(".module-header").forEach(header => {
+  header.onclick = () => {
+
+    const id = header.dataset.id;
+    const body = header.nextElementSibling;
+    const arrow = header.querySelector(".arrow");
+
+    const open = body.style.display === "block";
+
+    body.style.display = open ? "none" : "block";
+    arrow.textContent = open ? "▶" : "▼";
+
+    moduleState[id] = !open;
+    localStorage.setItem(stateKey, JSON.stringify(moduleState));
+  };
+});
+
+/* ================= ASSIGNMENTS ================= */
+
+const aEl = document.getElementById("assignments");
 
 db.assignments
-  .filter(a=>a.courseId===id)
-  .forEach(a=>{
+  .filter(a => a.courseId === id)
+  .forEach(a => {
 
-    const div=document.createElement("div");
-    div.className="card";
+    const div = document.createElement("div");
+    div.className = "card";
 
-    div.innerHTML=`
+    div.innerHTML = `
       <strong>${a.title}</strong>
       <p>Grade: ${a.grade ?? "Not graded"}</p>
     `;
