@@ -1,61 +1,125 @@
-const STORAGE_KEY = "lms-db";
+const KEY = "lms-db";
 
-/* ---------- DEFAULT DATA ---------- */
-const defaultData = {
+/* ================= INITIAL DATA ================= */
+
+const seed = {
+  semesters: [
+    { id: "fall-2026", name: "Fall 2026" }
+  ],
+
   courses: [
-    { id: "cybersecurity", name: "Intro to Cybersecurity", term: "Fall 2026", progress: 40 },
-    { id: "networking", name: "Networking Basics", term: "Fall 2026", progress: 25 }
+    {
+      id: "cybersecurity",
+      name: "Intro to Cybersecurity",
+      semester: "fall-2026",
+      progress: 40
+    },
+    {
+      id: "networking",
+      name: "Networking Basics",
+      semester: "fall-2026",
+      progress: 25
+    }
+  ],
+
+  assignments: [
+    {
+      id: "a1",
+      courseId: "cybersecurity",
+      title: "Threat Models Lab",
+      grade: 95,
+      status: "completed"
+    },
+    {
+      id: "a2",
+      courseId: "cybersecurity",
+      title: "Risk Quiz",
+      grade: null,
+      status: "in progress"
+    }
   ]
 };
 
-/* ---------- LOAD ---------- */
+/* ================= DB ================= */
+
 function load() {
-  const data = localStorage.getItem(STORAGE_KEY);
+  const data = localStorage.getItem(KEY);
   if (!data) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(defaultData));
-    return defaultData;
+    localStorage.setItem(KEY, JSON.stringify(seed));
+    return seed;
   }
   return JSON.parse(data);
 }
 
-/* ---------- SAVE ---------- */
 function save(data) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  localStorage.setItem(KEY, JSON.stringify(data));
 }
 
-const db = load();
+let db = load();
 
-/* ================= PUBLIC DASHBOARD ================= */
+/* ================= DASHBOARD ================= */
 
-if (document.getElementById("courseList")) {
-  const container = document.getElementById("courseList");
+function renderDashboard() {
+  const el = document.getElementById("dashboard");
+  if (!el) return;
 
-  db.courses.forEach(c => {
-    const div = document.createElement("div");
-    div.className = "card";
+  el.innerHTML = "";
 
-    div.innerHTML = `
-      <h3>${c.name}</h3>
-      <p>${c.term}</p>
+  db.semesters.forEach(sem => {
 
-      <div class="bar">
-        <div style="width:${c.progress}%"></div>
-      </div>
+    const block = document.createElement("div");
+    block.className = "card";
 
-      <p>${c.progress}% complete</p>
-    `;
+    block.innerHTML = `<h2>${sem.name}</h2>`;
 
-    container.appendChild(div);
+    db.courses
+      .filter(c => c.semester === sem.id)
+      .forEach(course => {
+
+        const assignments = db.assignments.filter(a => a.courseId === course.id);
+        const graded = assignments.filter(a => a.grade !== null);
+
+        const avg =
+          graded.reduce((s, a) => s + a.grade, 0) / (graded.length || 1);
+
+        course.progress = Math.round(avg || 0);
+
+        block.innerHTML += `
+          <div class="card">
+            <h3>${course.name}</h3>
+
+            <div class="bar">
+              <div style="width:${course.progress}%"></div>
+            </div>
+
+            <p>${course.progress}% complete</p>
+          </div>
+        `;
+      });
+
+    el.appendChild(block);
   });
+
+  save(db);
 }
 
-/* ================= INSTRUCTOR PANEL ================= */
+/* ================= INSTRUCTOR ================= */
 
 function renderAdmin() {
-  const container = document.getElementById("adminList");
-  if (!container) return;
+  const el = document.getElementById("adminCourses");
+  const select = document.getElementById("semesterSelect");
 
-  container.innerHTML = "";
+  if (!el) return;
+
+  el.innerHTML = "";
+  select.innerHTML = "";
+
+  db.semesters.forEach(s => {
+    const opt = document.createElement("option");
+    opt.value = s.id;
+    opt.textContent = s.name;
+    select.appendChild(opt);
+  });
 
   db.courses.forEach(c => {
     const div = document.createElement("div");
@@ -63,38 +127,43 @@ function renderAdmin() {
 
     div.innerHTML = `
       <strong>${c.name}</strong>
-      <p>${c.term}</p>
+      <p>${c.semester}</p>
 
-      <button onclick="deleteCourse('${c.id}')">
-        Remove
-      </button>
+      <button onclick="deleteCourse('${c.id}')">Delete</button>
     `;
 
-    container.appendChild(div);
+    el.appendChild(div);
   });
 }
 
-function addCourse() {
-  const name = document.getElementById("name").value;
-  const term = document.getElementById("term").value;
+/* ================= COURSE ACTIONS ================= */
 
-  const id = name.toLowerCase().replace(/\s/g, "-");
+function addCourse() {
+  const name = document.getElementById("courseName").value;
+  const sem = document.getElementById("semesterSelect").value;
 
   db.courses.push({
-    id,
+    id: name.toLowerCase().replace(/\s/g, "-"),
     name,
-    term,
+    semester: sem,
     progress: 0
   });
 
   save(db);
   renderAdmin();
+  renderDashboard();
 }
 
 function deleteCourse(id) {
   db.courses = db.courses.filter(c => c.id !== id);
+  db.assignments = db.assignments.filter(a => a.courseId !== id);
+
   save(db);
   renderAdmin();
+  renderDashboard();
 }
 
+/* ================= INIT ================= */
+
+renderDashboard();
 renderAdmin();
