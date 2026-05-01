@@ -3,24 +3,30 @@ import { Link } from "react-router-dom";
 
 export default function DashboardPage() {
   return (
-    <div>
-      <h1>Dashboard</h1>
+    <div className="dashboard-page">
+      <h1 className="page-title">Dashboard</h1>
 
       <div className="grid">
-        {courses.map((course) => (
+        {courses?.map((course) => (
           <Link
             to={`/course/${course.id}`}
             key={course.id}
-            className="card"
+            className="course-card"
           >
-            <h3>{course.name}</h3>
-            <p>{course.term}</p>
-
-            <div className="bar">
-              <div style={{ width: course.progress + "%" }} />
+            <div className="course-header">
+              <h3>{course.name}</h3>
+              <span className="term">{course.term}</span>
             </div>
 
-            <small>{course.progress}% complete</small>
+            <div className="progress-wrap">
+              <div className="bar">
+                <div
+                  className="bar-fill"
+                  style={{ width: `${course.progress}%` }}
+                />
+              </div>
+              <small>{course.progress}% complete</small>
+            </div>
           </Link>
         ))}
       </div>
