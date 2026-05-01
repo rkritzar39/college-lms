@@ -46,8 +46,8 @@ body {
 }
 
 .bar {
-  background: #ddd;
   height: 8px;
+  background: #ddd;
   border-radius: 10px;
   overflow: hidden;
 }
@@ -61,6 +61,15 @@ button {
   background: #2d7ff9;
   color: white;
   border: none;
-  padding: 8px 10px;
-  border-radius: 6px;
+  padding: 6px 10px;
+  margin-top: 6px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+input, select {
+  display: block;
+  margin: 6px 0;
+  padding: 8px;
+  width: 100%;
 }
