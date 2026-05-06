@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel | LMS Portfolio</title>
+
+  <!-- External CSS -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<div class="app">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <h2>LMS Admin</h2>
+
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="courses.html">Courses</a>
+      <a href="grades.html">Grades</a>
+      <a href="assignments.html">Assignments</a>
+      <a href="admin.html">Admin Panel</a>
+    </nav>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- Header -->
+    <section class="card">
+      <h1>Admin Control Panel</h1>
+      <p>Firebase-backed academic system configuration</p>
+    </section>
+
+    <!-- WARNING / ACCESS NOTICE -->
+    <section class="card">
+      <h3>Restricted Access</h3>
+      <p>This panel will be protected using Firebase Authentication.</p>
+    </section>
+
+    <!-- Grade Scale Editor -->
+    <section class="card">
+      <h2>Grade Scale Editor</h2>
+      <p>Modify GPA conversion values (stored in Firestore)</p>
+
+      <div id="gradeScaleEditor">
+
+        <div class="grid">
+
+          <div class="card">
+            <label>A</label>
+            <input type="number" step="0.01" value="4.00">
+          </div>
+
+          <div class="card">
+            <label>A-</label>
+            <input type="number" step="0.01" value="3.67">
+          </div>
+
+          <div class="card">
+            <label>B+</label>
+            <input type="number" step="0.01" value="3.33">
+          </div>
+
+          <div class="card">
+            <label>B</label>
+            <input type="number" step="0.01" value="3.00">
+          </div>
+
+          <div class="card">
+            <label>B-</label>
+            <input type="number" step="0.01" value="2.67">
+          </div>
+
+          <div class="card">
+            <label>C+</label>
+            <input type="number" step="0.01" value="2.33">
+          </div>
+
+          <div class="card">
+            <label>C</label>
+            <input type="number" step="0.01" value="2.00">
+          </div>
+
+          <div class="card">
+            <label>C-</label>
+            <input type="number" step="0.01" value="1.67">
+          </div>
+
+          <div class="card">
+            <label>D+</label>
+            <input type="number" step="0.01" value="1.33">
+          </div>
+
+          <div class="card">
+            <label>D</label>
+            <input type="number" step="0.01" value="1.00">
+          </div>
+
+          <div class="card">
+            <label>D-</label>
+            <input type="number" step="0.01" value="0.67">
+          </div>
+
+          <div class="card">
+            <label>F</label>
+            <input type="number" step="0.01" value="0.00">
+          </div>
+
+        </div>
+
+        <button>Save Grade Scale (Firebase)</button>
+
+      </div>
+    </section>
+
+    <!-- Course Manager -->
+    <section class="card">
+      <h2>Course Manager</h2>
+      <p>Add or edit courses (Firestore integration ready)</p>
+
+      <div class="card">
+        <input placeholder="Course Name">
+        <input placeholder="Credits">
+        <input placeholder="Instructor">
+        <button>Add Course</button>
+      </div>
+
+      <div id="adminCourseList"></div>
+
+    </section>
+
+    <!-- Assignment Manager -->
+    <section class="card">
+      <h2>Assignment Manager</h2>
+
+      <div class="card">
+        <input placeholder="Assignment Title">
+        <input placeholder="Course">
+        <input placeholder="Due Date">
+        <button>Add Assignment</button>
+      </div>
+
+      <div id="adminAssignmentList"></div>
+
+    </section>
+
+  </main>
+
+</div>
+
+<!-- External JS -->
+<script type="module" src="app.js"></script>
+
+</body>
+</html>
