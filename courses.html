@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Courses | LMS Portfolio</title>
+
+  <!-- External CSS only -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<div class="app">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <h2>LMS Portfolio</h2>
+
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="courses.html">Courses</a>
+      <a href="grades.html">Grades</a>
+      <a href="assignments.html">Assignments</a>
+    </nav>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main">
+
+    <!-- Page Header -->
+    <section class="card">
+      <h1>Courses</h1>
+      <p>Academic coursework overview (Firebase-driven)</p>
+    </section>
+
+    <!-- Loading State -->
+    <section id="loading" class="card">
+      <h2>Loading courses...</h2>
+      <p>Fetching data from Firestore database</p>
+    </section>
+
+    <!-- Courses Content -->
+    <section id="coursesContent" style="display:none;">
+
+      <!-- Course summary stats -->
+      <div class="grid">
+
+        <div class="card">
+          <h3>Total Courses</h3>
+          <p id="totalCourses">--</p>
+        </div>
+
+        <div class="card">
+          <h3>Total Credits</h3>
+          <p id="totalCredits">--</p>
+        </div>
+
+        <div class="card">
+          <h3>Active Semester</h3>
+          <p>Spring 2026</p>
+        </div>
+
+      </div>
+
+      <!-- Course List -->
+      <section class="card">
+        <h2>Enrolled Courses</h2>
+        <div id="courseList"></div>
+      </section>
+
+    </section>
+
+  </main>
+
+</div>
+
+<!-- External JS -->
+<script type="module" src="app.js"></script>
+
+</body>
+</html>
