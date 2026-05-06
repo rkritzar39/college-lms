@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grades | LMS Portfolio</title>
+
+  <!-- External CSS -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<div class="app">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <h2>LMS Portfolio</h2>
+
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="courses.html">Courses</a>
+      <a href="grades.html">Grades</a>
+      <a href="assignments.html">Assignments</a>
+    </nav>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- Header -->
+    <section class="card">
+      <h1>Grades Overview</h1>
+      <p>Official academic performance record (Firebase-powered)</p>
+    </section>
+
+    <!-- Loading -->
+    <section id="loading" class="card">
+      <h2>Loading grades...</h2>
+      <p>Retrieving academic records from Firestore</p>
+    </section>
+
+    <!-- Grades Content -->
+    <section id="gradesContent" style="display:none;">
+
+      <!-- GPA Summary -->
+      <div class="grid">
+
+        <div class="card">
+          <h3>Current GPA</h3>
+          <p id="gpaValue">--</p>
+        </div>
+
+        <div class="card">
+          <h3>Total Credits</h3>
+          <p id="creditValue">--</p>
+        </div>
+
+        <div class="card">
+          <h3>Academic Standing</h3>
+          <p id="standingValue">Good Standing</p>
+        </div>
+
+      </div>
+
+      <!-- Grade Table -->
+      <section class="card">
+        <h2>Course Grades</h2>
+
+        <div id="gradeList"></div>
+
+      </section>
+
+      <!-- Grade Scale Reference -->
+      <section class="card">
+        <h2>Grade Scale</h2>
+
+        <p>A = 4.00 | A- = 3.67 | B+ = 3.33 | B = 3.00</p>
+        <p>B- = 2.67 | C+ = 2.33 | C = 2.00 | C- = 1.67</p>
+        <p>D+ = 1.33 | D = 1.00 | D- = 0.67 | F = 0.00</p>
+
+      </section>
+
+    </section>
+
+  </main>
+
+</div>
+
+<!-- External JS -->
+<script type="module" src="app.js"></script>
+
+</body>
+</html>
