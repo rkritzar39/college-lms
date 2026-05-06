@@ -20,9 +20,12 @@ import {
    (REPLACE WITH YOURS)
 ========================= */
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID"
+  apiKey: "AIzaSyBvfKTXRiYpRM_Rkytf8mKc2EZAsCrnfQI",
+  authDomain: "lms-portfolio-1bfea.firebaseapp.com",
+  projectId: "lms-portfolio-1bfea",
+  storageBucket: "lms-portfolio-1bfea.firebasestorage.app",
+  messagingSenderId: "21867175334",
+  appId: "1:21867175334:web:934a8364629c22f9894367"
 };
 
 const app = initializeApp(firebaseConfig);
