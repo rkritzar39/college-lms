@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard</title>
+  <title>Academic LMS Portfolio</title>
+
+  <!-- External CSS ONLY -->
   <link rel="stylesheet" href="styles.css">
 </head>
 
@@ -11,81 +13,64 @@
 
 <div class="app">
 
-  <!-- SIDEBAR -->
-  <div class="sidebar">
-    <h2>College LMS</h2>
-    <a href="index.html">Dashboard</a>
-    <a href="gradebook.html">Gradebook</a>
-    <a href="instructor.html">Instructor</a>
-  </div>
+  <!-- SIDEBAR (static navigation only) -->
+  <aside class="sidebar">
+    <h2>LMS Portfolio</h2>
 
-  <!-- MAIN -->
-  <div class="main">
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="courses.html">Courses</a>
+      <a href="grades.html">Grades</a>
+      <a href="assignments.html">Assignments</a>
+      <a href="admin.html">Admin</a>
+    </nav>
+  </aside>
 
-    <div class="topbar">
-      <h1>Academic Dashboard</h1>
-    </div>
+  <!-- MAIN CONTENT (Firebase-rendered) -->
+  <main class="main">
 
-    <div class="content" id="dashboard"></div>
+    <!-- Loading state -->
+    <section id="loading" class="card">
+      <h2>Loading Academic System...</h2>
+      <p>Connecting to secure database...</p>
+    </section>
 
-  </div>
+    <!-- App content (hidden until JS loads Firebase data) -->
+    <section id="appContent" style="display:none;">
+
+      <div class="card">
+        <h1>Academic Portfolio System</h1>
+        <p>Live Firebase-powered LMS dashboard</p>
+      </div>
+
+      <div class="grid">
+
+        <div class="card">
+          <h3>GPA</h3>
+          <p id="gpaValue">--</p>
+        </div>
+
+        <div class="card">
+          <h3>Courses</h3>
+          <div id="courseList"></div>
+        </div>
+
+        <div class="card">
+          <h3>Assignments</h3>
+          <div id="assignmentList"></div>
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
 
 </div>
 
-<script src="app.js"></script>
-
-<script>
-const root = document.getElementById("dashboard");
-
-/* ================= SEMESTER GROUPING ================= */
-
-db.semesters.forEach(sem => {
-
-  const semesterBox = document.createElement("div");
-  semesterBox.className = "card";
-
-  semesterBox.innerHTML = `<h2>${sem.name}</h2>`;
-
-/* FILTER COURSES */
-  const courses = db.courses.filter(c => c.semester === sem.id);
-
-  courses.forEach(c => {
-
-    const assignments = db.assignments.filter(a => a.courseId === c.id);
-
-    const avg = assignments.length
-      ? assignments.reduce((s,a)=>s+(a.grade||0),0)/assignments.length
-      : 0;
-
-    const courseCard = document.createElement("div");
-    courseCard.className = "card";
-
-    courseCard.innerHTML = `
-
-      <h3>${c.name}</h3>
-
-      <div class="bar">
-        <div style="width:${avg}%"></div>
-      </div>
-
-      <p style="margin:6px 0;color:#6b7785;">
-        ${Math.round(avg)}% progress
-      </p>
-
-      <a href="course.html?id=${c.id}">
-        Open Course
-      </a>
-
-    `;
-
-    semesterBox.appendChild(courseCard);
-
-  });
-
-  root.appendChild(semesterBox);
-
-});
-</script>
+<!-- External JS ONLY -->
+<script type="module" src="app.js"></script>
 
 </body>
 </html>
