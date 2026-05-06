@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Assignments | LMS Portfolio</title>
+
+  <!-- External CSS -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<div class="app">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <h2>LMS Portfolio</h2>
+
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="courses.html">Courses</a>
+      <a href="grades.html">Grades</a>
+      <a href="assignments.html">Assignments</a>
+    </nav>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- Header -->
+    <section class="card">
+      <h1>Assignments</h1>
+      <p>Task tracking system (Firebase-powered LMS module)</p>
+    </section>
+
+    <!-- Loading State -->
+    <section id="loading" class="card">
+      <h2>Loading assignments...</h2>
+      <p>Fetching data from Firestore database</p>
+    </section>
+
+    <!-- Assignment Content -->
+    <section id="assignmentsContent" style="display:none;">
+
+      <!-- Summary Stats -->
+      <div class="grid">
+
+        <div class="card">
+          <h3>Total Assignments</h3>
+          <p id="totalAssignments">--</p>
+        </div>
+
+        <div class="card">
+          <h3>Completed</h3>
+          <p id="completedAssignments">--</p>
+        </div>
+
+        <div class="card">
+          <h3>In Progress</h3>
+          <p id="inProgressAssignments">--</p>
+        </div>
+
+      </div>
+
+      <!-- Assignment List -->
+      <section class="card">
+        <h2>Assignment Tracker</h2>
+
+        <div id="assignmentList"></div>
+
+      </section>
+
+    </section>
+
+  </main>
+
+</div>
+
+<!-- External JS -->
+<script type="module" src="app.js"></script>
+
+</body>
+</html>
