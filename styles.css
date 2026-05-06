@@ -1,176 +1,191 @@
-:root{
-  --bg:#f5f7fb;
-  --panel:#fff;
-  --border:#dfe3e8;
-  --text:#2d3b45;
-  --muted:#6b7785;
-  --blue:#2d7ff9;
-  --sidebar:#1e2a38;
+/* =========================
+   GLOBAL RESET
+========================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-*{box-sizing:border-box}
-
-body{
-  margin:0;
-  font-family:system-ui,Arial;
-  background:var(--bg);
-  color:var(--text);
+/* =========================
+   BASE STYLES
+========================= */
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f6f9;
+  color: #1c1c1c;
 }
 
-/* APP */
-.app{
-  display:flex;
-  min-height:100vh;
+/* =========================
+   APP LAYOUT
+========================= */
+.app {
+  display: flex;
+  min-height: 100vh;
 }
 
-/* SIDEBAR */
-.sidebar{
-  width:260px;
-  background:var(--sidebar);
-  color:#fff;
-  padding:16px;
-  position:fixed;
-  height:100vh;
-  overflow:auto;
+/* =========================
+   SIDEBAR
+========================= */
+.sidebar {
+  width: 240px;
+  background: #1e2a38;
+  color: #ffffff;
+  padding: 20px;
 }
 
-.sidebar h2{
-  font-size:16px;
+.sidebar h2 {
+  font-size: 18px;
+  margin-bottom: 20px;
 }
 
-.sidebar a{
-  display:block;
-  color:#fff;
-  text-decoration:none;
-  padding:10px;
-  border-radius:6px;
-  font-size:14px;
-  opacity:.85;
+.sidebar nav a {
+  display: block;
+  color: #cfd8dc;
+  text-decoration: none;
+  padding: 10px 0;
+  font-size: 14px;
 }
 
-.sidebar a:hover{
-  background:rgba(255,255,255,0.08);
-  opacity:1;
+.sidebar nav a:hover {
+  color: #ffffff;
 }
 
-/* MAIN */
-.main{
-  margin-left:260px;
-  width:calc(100% - 260px);
+/* =========================
+   MAIN CONTENT AREA
+========================= */
+.main {
+  flex: 1;
+  padding: 20px;
 }
 
-/* TOPBAR */
-.topbar{
-  background:var(--panel);
-  border-bottom:1px solid var(--border);
-  padding:16px;
-  position:sticky;
-  top:0;
-  z-index:10;
+/* =========================
+   CARD SYSTEM
+========================= */
+.card {
+  background: #ffffff;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
 }
 
-/* CONTENT */
-.content{
-  padding:20px;
-  max-width:1100px;
+.card h1,
+.card h2,
+.card h3 {
+  margin-bottom: 10px;
 }
 
-/* CARD */
-.card{
-  background:var(--panel);
-  border:1px solid var(--border);
-  border-left:4px solid var(--blue);
-  border-radius:10px;
-  padding:14px;
-  margin-bottom:12px;
-  box-shadow:0 2px 6px rgba(0,0,0,0.04);
+/* =========================
+   GRID SYSTEM (DASHBOARD)
+========================= */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin-top: 15px;
 }
 
-/* PROGRESS */
-.bar{
-  height:8px;
-  background:#e6e9ef;
-  border-radius:999px;
-  overflow:hidden;
+/* =========================
+   TOPBAR (DASHBOARD HEADER)
+========================= */
+.topbar {
+  background: #ffffff;
+  padding: 15px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
 }
 
-.bar div{
-  height:100%;
-  background:var(--blue);
+/* =========================
+   TEXT ELEMENTS
+========================= */
+p {
+  font-size: 14px;
+  line-height: 1.4;
 }
 
-/* INPUTS */
-input{
-  width:100%;
-  padding:10px;
-  margin:6px 0;
-  border:1px solid var(--border);
-  border-radius:6px;
+/* =========================
+   GRADE BADGES
+========================= */
+.grade {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 6px;
+  color: white;
+  font-weight: bold;
+  font-size: 13px;
 }
 
-/* BUTTON */
-button{
-  background:var(--blue);
-  color:#fff;
-  border:none;
-  padding:8px 12px;
-  border-radius:6px;
-  cursor:pointer;
+.A { background: #2ecc71; }
+.B { background: #3498db; }
+.C { background: #f1c40f; color: #000; }
+.D { background: #e67e22; }
+.F { background: #e74c3c; }
+
+/* =========================
+   BUTTONS
+========================= */
+button {
+  background: #1e2a38;
+  color: #ffffff;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
 }
 
-/* LIST */
-ul{
-  margin:6px 0;
+button:hover {
+  background: #2c3e50;
 }
 
-/* ================= MOBILE ================= */
+/* =========================
+   LIST SECTIONS (COURSES / ASSIGNMENTS / GRADES)
+========================= */
+#courseList .card,
+#assignmentList .card,
+#gradeList .card {
+  margin-top: 10px;
+}
 
-@media (max-width:768px){
+/* =========================
+   LOADING STATE
+========================= */
+#loading {
+  text-align: center;
+  padding: 30px;
+  font-style: italic;
+  color: #666;
+}
 
-  .sidebar{
-    position:relative;
-    width:100%;
-    height:auto;
+/* =========================
+   RESPONSIVE DESIGN
+========================= */
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr;
   }
 
-  .main{
-    margin-left:0;
-    width:100%;
-  }
-
-  .app{
-    flex-direction:column;
+  .sidebar {
+    width: 180px;
   }
 }
 
-/* MODULE SYSTEM */
+@media (max-width: 600px) {
+  .app {
+    flex-direction: column;
+  }
 
-.module-header{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  cursor:pointer;
-  padding:8px 4px;
-  font-size:15px;
-}
+  .sidebar {
+    width: 100%;
+    text-align: center;
+  }
 
-.module-header:hover{
-  background:#f0f3f7;
-  border-radius:6px;
-}
-
-.module-body{
-  padding-left:20px;
-  margin-top:6px;
-}
-
-.module-body li{
-  padding:4px 0;
-  color:#4a5a68;
-}
-
-/* Arrow animation feel */
-.arrow{
-  font-size:12px;
-  width:16px;
+  .sidebar nav a {
+    display: inline-block;
+    margin: 5px 10px;
+  }
 }
